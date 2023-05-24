@@ -2,15 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shoppingcart/models/product.dart';
 
 import 'package:shoppingcart/ui/widgets/app_text_buton.dart';
 import 'package:shoppingcart/ui/widgets/dialog/selected_number_dialog.dart';
 
 Future<void> showAddToCartBottomSheet(
   BuildContext context, {
-  required String imagePath,
-  required String productTitle,
-  required String productPrice,
+  required Product product,
   required VoidCallback onAddToCart,
   required ValueChanged<int> onAmountChanged,
 }) async {
@@ -22,14 +21,14 @@ Future<void> showAddToCartBottomSheet(
           Radius.circular(14),
         ),
         child: Image(
-          image: AssetImage(imagePath),
+          image: AssetImage(product.imageUrl),
           height: 100,
           width: 100,
           fit: BoxFit.cover,
         ),
       );
       var productTitleText = Text(
-        productTitle,
+        product.title,
         style: const TextStyle(
           color: Colors.black,
           fontSize: 16,
@@ -55,7 +54,7 @@ Future<void> showAddToCartBottomSheet(
         ),
       );
       var productPriceText = Text(
-        productPrice,
+        product.price.toString(),
         style: TextStyle(
           fontSize: 16,
           color: Colors.amber[700],
@@ -105,7 +104,7 @@ Future<void> showAddToCartBottomSheet(
                                 await showSelectNumberDialog(
                                   context,
                                   amount: value,
-                                  productTitle: productTitle,
+                                  productTitle: product.title,
                                   onAmountChanged: (value) {
                                     onAmountChanged.call(value);
                                   },

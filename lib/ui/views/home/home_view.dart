@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shoppingcart/models/product.dart';
 import 'package:shoppingcart/ui/widgets/add_to_cart_bottom_sheet.dart';
 import 'package:shoppingcart/ui/widgets/product_card_item.dart';
 
@@ -16,18 +17,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     var shoppingCartButton = IconButton(
       onPressed: () {
-        showAddToCartBottomSheet(
-          context,
-          imagePath: 'assets/images/product_0.jpg',
-          productTitle: 'Product #11',
-          productPrice: '170,000 đ',
-          onAddToCart: () {
-            // TODO: Add to cart
-          },
-          onAmountChanged: (value) {
-            // TODO: Amount changed
-          },
-        );
+        // TODO: Show shopping cart
       },
       icon: const Stack(
         clipBehavior: Clip.none,
@@ -82,11 +72,34 @@ class _HomeViewState extends State<HomeView> {
           scrollDirection: Axis.horizontal,
           itemCount: 6,
           itemBuilder: (context, index) {
-            return const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8),
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               child: ProductCardItem(
                 height: 200,
                 width: 150,
+                product: Product(
+                  id: '1',
+                  title: 'Product #11',
+                  price: 170000,
+                  imageUrl: 'assets/images/product_0.jpg',
+                ),
+                onTap: () {
+                  showAddToCartBottomSheet(
+                    context,
+                    product: Product(
+                      id: '1',
+                      title: 'Product #11',
+                      price: 170000,
+                      imageUrl: 'assets/images/product_0.jpg',
+                    ),
+                    onAddToCart: () {
+                      // TODO: Add to cart
+                    },
+                    onAmountChanged: (value) {
+                      // TODO: Amount changed
+                    },
+                  );
+                },
               ),
             );
           },
@@ -114,11 +127,34 @@ class _HomeViewState extends State<HomeView> {
         crossAxisCount: 2,
         mainAxisSpacing: 10,
       ),
-      itemBuilder: (context, index) => const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8),
+      itemBuilder: (context, index) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         child: ProductCardItem(
           height: 200,
           width: double.infinity,
+          product: Product(
+            id: '1',
+            title: 'Product #11',
+            price: 170000,
+            imageUrl: 'assets/images/product_0.jpg',
+          ),
+          onTap: () {
+            showAddToCartBottomSheet(
+              context,
+              product: Product(
+                id: '1',
+                title: 'Product #11',
+                price: 170000,
+                imageUrl: 'assets/images/product_0.jpg',
+              ),
+              onAddToCart: () {
+                // TODO: Add to cart
+              },
+              onAmountChanged: (value) {
+                // TODO: Amount changed
+              },
+            );
+          },
         ),
       ),
     );

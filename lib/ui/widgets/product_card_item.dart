@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shoppingcart/models/product.dart';
 
 class ProductCardItem extends StatelessWidget {
   const ProductCardItem({
     Key? key,
     required this.height,
     required this.width,
+    required this.product,
+    required this.onTap,
   }) : super(key: key);
 
   final double height;
   final double width;
+  final Product product;
+  final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -26,7 +31,7 @@ class ProductCardItem extends StatelessWidget {
             child: Stack(
               children: [
                 Image.asset(
-                  'assets/images/product_0.jpg',
+                  product.imageUrl,
                   height: height * 0.7,
                   width: width,
                   fit: BoxFit.cover,
@@ -54,9 +59,9 @@ class ProductCardItem extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Product #16',
-                      style: TextStyle(
+                    Text(
+                      product.title,
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -64,7 +69,7 @@ class ProductCardItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '160,000 đ',
+                      product.price.toString(),
                       style: TextStyle(
                         color: Colors.amber[700],
                         fontSize: 16,
@@ -73,9 +78,7 @@ class ProductCardItem extends StatelessWidget {
                   ],
                 ),
                 IconButton(
-                  onPressed: () {
-                    // TODO: Implement add to cart
-                  },
+                  onPressed: onTap,
                   icon: Icon(
                     Icons.add_shopping_cart_outlined,
                     color: Colors.amber[700],
