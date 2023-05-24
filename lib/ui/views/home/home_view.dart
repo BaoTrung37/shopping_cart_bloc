@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shoppingcart/ui/widgets/add_to_cart_bottom_sheet.dart';
 import 'package:shoppingcart/ui/widgets/product_card_item.dart';
 
 class HomeView extends StatefulWidget {
@@ -15,22 +16,34 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     var shoppingCartButton = IconButton(
       onPressed: () {
-        // TODO: Implement go to cart
+        showAddToCartBottomSheet(
+          context,
+          imagePath: 'assets/images/product_0.jpg',
+          productTitle: 'Product #11',
+          productPrice: '170,000 đ',
+          onAddToCart: () {
+            // TODO: Add to cart
+          },
+          onAmountChanged: (value) {
+            // TODO: Amount changed
+          },
+        );
       },
       icon: const Stack(
+        clipBehavior: Clip.none,
         children: [
           Icon(Icons.shopping_cart_outlined),
           Positioned(
-            bottom: 0,
-            left: 0,
+            bottom: -4,
+            left: -4,
             child: CircleAvatar(
-              radius: 6,
+              radius: 8,
               backgroundColor: Colors.redAccent,
               child: Text(
-                '1',
+                '3',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 8,
+                  fontSize: 10,
                 ),
               ),
             ),
