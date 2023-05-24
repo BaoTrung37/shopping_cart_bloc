@@ -25,7 +25,7 @@ class _SplashViewState extends State<SplashView> {
             Expanded(
               child: Center(
                 child: Image.asset(
-                  'assets/cart.png',
+                  'assets/images/cart.png',
                   height: 100,
                   width: 100,
                 ),
