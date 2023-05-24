@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shoppingcart/models/product.dart';
+import 'package:shoppingcart/router/app_routes.dart';
 import 'package:shoppingcart/ui/widgets/add_to_cart_bottom_sheet.dart';
 import 'package:shoppingcart/ui/widgets/product_card_item.dart';
 
@@ -17,7 +18,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     var shoppingCartButton = IconButton(
       onPressed: () {
-        // TODO: Show shopping cart
+        Navigator.pushNamed(context, AppRoutes.shoppingCart);
       },
       icon: const Stack(
         clipBehavior: Clip.none,

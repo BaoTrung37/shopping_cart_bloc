@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shoppingcart/ui/views/home/home_view.dart';
+import 'package:shoppingcart/router/app_router.dart';
+import 'package:shoppingcart/router/app_routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomeView(),
+      home: const Navigator(
+        initialRoute: AppRoutes.home,
+        onGenerateRoute: AppRouter.onGenerateRoute,
+      ),
     );
   }
 }
