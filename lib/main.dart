@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shoppingcart/ui/views/splash/splash_view.dart';
+import 'package:shoppingcart/ui/views/home/home_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SplashView(),
+      home: const HomeView(),
     );
   }
 }
