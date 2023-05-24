@@ -94,6 +94,22 @@ class _HomeViewState extends State<HomeView> {
         ),
       ),
     );
+
+    var allProductGridView = SliverGrid.builder(
+      itemCount: 10,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 10,
+      ),
+      itemBuilder: (context, index) => const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8),
+        child: ProductCardItem(
+          height: 200,
+          width: double.infinity,
+        ),
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
@@ -108,20 +124,7 @@ class _HomeViewState extends State<HomeView> {
           hotProductTitle,
           hotProductListView,
           allProductTitle,
-          SliverGrid.builder(
-            itemCount: 10,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 10,
-            ),
-            itemBuilder: (context, index) => const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              child: ProductCardItem(
-                height: 200,
-                width: double.infinity,
-              ),
-            ),
-          ),
+          allProductGridView,
         ],
       ),
     );
