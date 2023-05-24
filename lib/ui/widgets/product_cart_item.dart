@@ -9,11 +9,13 @@ class ProductCartItem extends StatelessWidget {
     required this.product,
     required this.onAmountChanged,
     required this.onRemoveTap,
+    this.elevation = 1,
   }) : super(key: key);
 
   final Product product;
   final ValueChanged<int> onAmountChanged;
   final VoidCallback onRemoveTap;
+  final double elevation;
   @override
   Widget build(BuildContext context) {
     var productImage = ClipRRect(
@@ -60,16 +62,16 @@ class ProductCartItem extends StatelessWidget {
       ),
     );
 
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(14),
-          topRight: Radius.circular(14),
-        ),
+    return Card(
+      elevation: elevation,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        padding: const EdgeInsets.symmetric(
+          vertical: 14,
+          horizontal: 16,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

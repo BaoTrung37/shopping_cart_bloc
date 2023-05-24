@@ -23,31 +23,39 @@ class _ShoppingCartViewState extends State<ShoppingCartView> {
       body: Column(
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height - 180,
+            height: MediaQuery.of(context).size.height - 200,
             child: CustomScrollView(
               slivers: [
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
                     childCount: 5,
-                    (context, index) => ProductCartItem(
-                      onAmountChanged: (value) {},
-                      product: Product(
-                        id: '1',
-                        title: 'Product #11',
-                        price: 170000,
-                        imageUrl: 'assets/images/product_0.jpg',
+                    (context, index) => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: ProductCartItem(
+                        onAmountChanged: (value) {},
+                        product: Product(
+                          id: '1',
+                          title: 'Product #11',
+                          price: 170000,
+                          imageUrl: 'assets/images/product_0.jpg',
+                        ),
+                        onRemoveTap: () {
+                          //
+                        },
                       ),
-                      onRemoveTap: () {
-                        //
-                      },
                     ),
                   ),
                 ),
               ],
             ),
           ),
+          Container(
+            height: 0.5,
+            width: double.infinity,
+            color: Colors.grey,
+          ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             child: Column(
               children: [
                 const Row(
