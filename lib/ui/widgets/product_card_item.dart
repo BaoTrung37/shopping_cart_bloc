@@ -76,7 +76,7 @@ class ProductCardItem extends StatelessWidget {
                       product.price.toCurrencyString(),
                       style: TextStyle(
                         color: Colors.amber[700],
-                        fontSize: 16,
+                        fontSize: 14,
                       ),
                     ),
                   ],

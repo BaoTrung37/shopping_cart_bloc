@@ -20,6 +20,12 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var shoppingCartButton = IconButton(
       onPressed: () {
@@ -188,6 +194,8 @@ class _HotProductListView extends StatelessWidget {
   final List<Product> hotProducts;
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width / 3 + 8;
+
     return SliverToBoxAdapter(
       child: SizedBox(
         height: 200,
@@ -200,7 +208,7 @@ class _HotProductListView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: ProductCardItem(
                 height: 200,
-                width: 150,
+                width: width,
                 isHotProduct: true,
                 product: product,
                 onTap: () async {
