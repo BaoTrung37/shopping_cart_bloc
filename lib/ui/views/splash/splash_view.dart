@@ -13,7 +13,7 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Future.delayed(const Duration(seconds: 3), () {
-        Navigator.of(context).pushNamed(AppRoutes.home);
+        Navigator.of(context).pushReplacementNamed(AppRoutes.home);
       });
     });
     super.initState();
