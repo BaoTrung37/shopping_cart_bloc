@@ -109,6 +109,7 @@ class _HomeContent extends StatelessWidget {
         ),
       ),
     );
+    // debugPrint('HomeContent build');
 
     return Builder(
       builder: (context) => BlocBuilder<HomeBloc, HomeState>(
@@ -144,7 +145,6 @@ class _AllProductGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var amount = 1;
     return SliverGrid.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -158,26 +158,18 @@ class _AllProductGridView extends StatelessWidget {
           child: ProductCardItem(
             height: 200,
             width: double.infinity,
-            product: allProducts[index],
-            onTap: () {
-              showAddToCartBottomSheet(
+            product: product,
+            onTap: () async {
+              await showAddToCartBottomSheet(
                 context,
-                product: Product(
-                  id: '1',
-                  title: 'Product #11',
-                  price: 170000,
-                  imageUrl: 'assets/images/product_0.jpg',
-                ),
-                onAddToCart: () {
+                product: product,
+                onAddToCart: (value) {
                   context.read<CartBloc>().add(
                         CartEvent.addedProduct(
                           product: product,
-                          quantity: amount,
+                          quantity: value,
                         ),
                       );
-                },
-                onAmountChanged: (value) {
-                  amount = value;
                 },
               );
             },
@@ -196,7 +188,6 @@ class _HotProductListView extends StatelessWidget {
   final List<Product> hotProducts;
   @override
   Widget build(BuildContext context) {
-    var amount = 1;
     return SliverToBoxAdapter(
       child: SizedBox(
         height: 200,
@@ -216,16 +207,13 @@ class _HotProductListView extends StatelessWidget {
                   await showAddToCartBottomSheet(
                     context,
                     product: product,
-                    onAddToCart: () {
+                    onAddToCart: (value) {
                       context.read<CartBloc>().add(
                             CartEvent.addedProduct(
                               product: product,
-                              quantity: amount,
+                              quantity: value,
                             ),
                           );
-                    },
-                    onAmountChanged: (value) {
-                      amount = value;
                     },
                   );
                 },

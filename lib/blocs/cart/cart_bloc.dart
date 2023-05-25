@@ -56,11 +56,15 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           .isNotEmpty;
 
       if (isProductInCart) {
-        cartProducts = cartProducts
-            .where((element) => element.product.id == event.product.id)
-            .toList()
-            .map((e) => e.copyWith(quantity: e.quantity + 1))
-            .toList();
+        // cartProducts = cartProducts
+        //     .where((element) => element.product.id == event.product.id)
+        //     .toList()
+        //     .map((e) => e.copyWith(quantity: e.quantity + event.quantity))
+        //     .toList();
+        final index = cartProducts
+            .indexWhere((element) => element.product.id == event.product.id);
+        cartProducts[index] = cartProducts[index]
+            .copyWith(quantity: cartProducts[index].quantity + event.quantity);
       } else {
         cartProducts = cartProducts
           ..add(CartProduct(

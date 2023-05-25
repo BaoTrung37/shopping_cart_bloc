@@ -9,8 +9,7 @@ import 'package:shoppingcart/ui/widgets/product_cart_item.dart';
 Future<void> showAddToCartBottomSheet(
   BuildContext context, {
   required Product product,
-  required VoidCallback onAddToCart,
-  required ValueChanged<int> onAmountChanged,
+  required Function(int) onAddToCart,
 }) async {
   await showModalBottomSheet(
     backgroundColor: Colors.white,
@@ -25,34 +24,42 @@ Future<void> showAddToCartBottomSheet(
       return _ContentAddToCartBottomSheet(
         product: product,
         onAddToCart: onAddToCart,
-        onAmountChanged: onAmountChanged,
       );
     },
   );
 }
 
-class _ContentAddToCartBottomSheet extends StatelessWidget {
+class _ContentAddToCartBottomSheet extends StatefulWidget {
   final Product product;
-  final VoidCallback onAddToCart;
-  final ValueChanged<int> onAmountChanged;
+  final Function(int) onAddToCart;
 
   const _ContentAddToCartBottomSheet({
-    Key? key,
     required this.product,
     required this.onAddToCart,
-    required this.onAmountChanged,
-  }) : super(key: key);
+  });
+
+  @override
+  State<_ContentAddToCartBottomSheet> createState() =>
+      _ContentAddToCartBottomSheetState();
+}
+
+class _ContentAddToCartBottomSheetState
+    extends State<_ContentAddToCartBottomSheet> {
+  int amount = 1;
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('render bottom sheet');
+    debugPrint('amount12: $amount');
     var addProductToCartButton = Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: AppTextButton(
-        onTap: onAddToCart,
+        onTap: () {
+          widget.onAddToCart(amount);
+        },
         title: 'Add to card',
       ),
     );
-    int amount = 1;
     return Container(
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
@@ -65,11 +72,12 @@ class _ContentAddToCartBottomSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ProductCartItem(
-            product: product,
+            product: widget.product,
             onAmountChanged: (value) {
-              
-              onAmountChanged.call(value);
-              amount = value;
+              setState(() {
+                amount = value;
+                debugPrint('amount: $amount');
+              });
             },
             onRemoveTap: () {
               Navigator.pop(context);

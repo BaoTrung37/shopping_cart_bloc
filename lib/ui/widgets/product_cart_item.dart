@@ -20,6 +20,7 @@ class ProductCartItem extends StatelessWidget {
   final VoidCallback onRemoveTap;
   final double elevation;
   final int amount;
+
   @override
   Widget build(BuildContext context) {
     var productImage = ClipRRect(
@@ -33,6 +34,7 @@ class ProductCartItem extends StatelessWidget {
         fit: BoxFit.cover,
       ),
     );
+
     var productTitleText = Text(
       product.title,
       style: const TextStyle(
@@ -42,6 +44,7 @@ class ProductCartItem extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
       ),
     );
+
     var closeButton = GestureDetector(
       onTap: onRemoveTap,
       child: Container(
@@ -57,6 +60,7 @@ class ProductCartItem extends StatelessWidget {
         ),
       ),
     );
+
     var productPriceText = Text(
       product.price.toString(),
       style: TextStyle(
@@ -65,7 +69,6 @@ class ProductCartItem extends StatelessWidget {
         fontWeight: FontWeight.bold,
       ),
     );
-
     return Card(
       elevation: elevation,
       shape: RoundedRectangleBorder(
@@ -162,22 +165,25 @@ class _NumberPickerState extends State<_NumberPicker> {
 
   void _increment() {
     if (_number == 999) return;
-    widget.onChanged(_number + 1);
     setState(() {
       _number += 1;
+      widget.onChanged(_number);
     });
+    debugPrint('increment $_number');
   }
 
   void _decrement() {
     if (_number == 1) return;
-    widget.onChanged(_number - 1);
     setState(() {
       _number -= 1;
+      widget.onChanged(_number);
     });
+    debugPrint('decrement $_number');
   }
 
   @override
   Widget build(BuildContext context) {
+    _number = widget.amount;
     var decrementButton = GestureDetector(
       onTap: _decrement,
       child: Container(
@@ -197,9 +203,11 @@ class _NumberPickerState extends State<_NumberPicker> {
       ),
     );
     var amountText = GestureDetector(
-      onTap: () => widget.onNumberTap.call(
-        _number.toString(),
-      ),
+      onTap: () {
+        widget.onNumberTap.call(
+          _number.toString(),
+        );
+      },
       child: Container(
         padding: const EdgeInsets.all(6),
         decoration: BoxDecoration(
