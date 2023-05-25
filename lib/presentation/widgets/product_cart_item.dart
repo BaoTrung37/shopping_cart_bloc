@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:shoppingcart/models/product.dart';
-import 'package:shoppingcart/ui/widgets/dialog/selected_number_dialog.dart';
-import 'package:shoppingcart/utils/extensions/number_format_extension.dart';
+import 'package:shoppingcart/presentation/widgets/dialog/selected_number_dialog.dart';
+import 'package:shoppingcart/presentation/utilities/extensions/number_format_extension.dart';
 
 class ProductCartItem extends StatelessWidget {
   const ProductCartItem({

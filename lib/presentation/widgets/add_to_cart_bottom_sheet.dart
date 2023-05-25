@@ -1,10 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:flutter/material.dart';
-
 import 'package:shoppingcart/models/product.dart';
-import 'package:shoppingcart/ui/widgets/app_text_buton.dart';
-import 'package:shoppingcart/ui/widgets/product_cart_item.dart';
+
+import 'package:shoppingcart/presentation/widgets/app_text_buton.dart';
+import 'package:shoppingcart/presentation/widgets/product_cart_item.dart';
 
 Future<void> showAddToCartBottomSheet(
   BuildContext context, {

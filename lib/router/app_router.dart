@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shoppingcart/router/app_routes.dart';
-import 'package:shoppingcart/ui/views/home/home_view.dart';
-import 'package:shoppingcart/ui/views/shopping_cart/shopping_cart_view.dart';
-import 'package:shoppingcart/ui/views/splash/splash_view.dart';
+import 'package:shoppingcart/presentation/views/home/home_view.dart';
+import 'package:shoppingcart/presentation/views/shopping_cart/shopping_cart_view.dart';
+import 'package:shoppingcart/presentation/views/splash/splash_view.dart';
 
 class AppRouter {
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {

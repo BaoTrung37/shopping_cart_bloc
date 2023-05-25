@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shoppingcart/models/product.dart';
-import 'package:shoppingcart/utils/extensions/number_format_extension.dart';
+import 'package:shoppingcart/presentation/utilities/extensions/number_format_extension.dart';
 
 class ProductCardItem extends StatelessWidget {
   const ProductCardItem({

@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shoppingcart/models/product.dart';
 import 'package:shoppingcart/repositories/home/home_repository.dart';
-import 'package:shoppingcart/utils/enums/loading_status.dart';
+import 'package:shoppingcart/presentation/utilities/enums/loading_status.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';

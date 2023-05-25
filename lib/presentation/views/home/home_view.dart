@@ -7,9 +7,9 @@ import 'package:shoppingcart/blocs/cart/cart_bloc.dart';
 import 'package:shoppingcart/blocs/home/home_bloc.dart';
 import 'package:shoppingcart/models/product.dart';
 import 'package:shoppingcart/router/app_routes.dart';
-import 'package:shoppingcart/ui/widgets/add_to_cart_bottom_sheet.dart';
-import 'package:shoppingcart/ui/widgets/product_card_item.dart';
-import 'package:shoppingcart/utils/enums/loading_status.dart';
+import 'package:shoppingcart/presentation/widgets/add_to_cart_bottom_sheet.dart';
+import 'package:shoppingcart/presentation/widgets/product_card_item.dart';
+import 'package:shoppingcart/presentation/utilities/enums/loading_status.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});

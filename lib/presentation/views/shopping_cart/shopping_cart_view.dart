@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppingcart/blocs/cart/cart_bloc.dart';
 import 'package:shoppingcart/router/app_routes.dart';
-import 'package:shoppingcart/ui/widgets/app_text_buton.dart';
-import 'package:shoppingcart/ui/widgets/dialog/notification_dialog.dart';
-import 'package:shoppingcart/ui/widgets/product_cart_item.dart';
-import 'package:shoppingcart/utils/enums/loading_status.dart';
-import 'package:shoppingcart/utils/extensions/number_format_extension.dart';
+import 'package:shoppingcart/presentation/widgets/app_text_buton.dart';
+import 'package:shoppingcart/presentation/widgets/dialog/notification_dialog.dart';
+import 'package:shoppingcart/presentation/widgets/product_cart_item.dart';
+import 'package:shoppingcart/presentation/utilities/enums/loading_status.dart';
+import 'package:shoppingcart/presentation/utilities/extensions/number_format_extension.dart';
 
 class ShoppingCartView extends StatefulWidget {
   const ShoppingCartView({super.key});

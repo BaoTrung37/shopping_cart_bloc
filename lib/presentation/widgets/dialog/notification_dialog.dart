@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shoppingcart/ui/widgets/app_text_buton.dart';
+import 'package:shoppingcart/presentation/widgets/app_text_buton.dart';
 
 Future<bool?> showNotificationDialog(
   BuildContext context, {

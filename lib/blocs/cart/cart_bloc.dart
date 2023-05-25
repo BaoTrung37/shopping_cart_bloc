@@ -7,7 +7,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shoppingcart/models/cart_product.dart';
 import 'package:shoppingcart/models/product.dart';
 import 'package:shoppingcart/repositories/cart/cart_category.dart';
-import 'package:shoppingcart/utils/enums/loading_status.dart';
+import 'package:shoppingcart/presentation/utilities/enums/loading_status.dart';
 
 part 'cart_bloc.freezed.dart';
 part 'cart_event.dart';
