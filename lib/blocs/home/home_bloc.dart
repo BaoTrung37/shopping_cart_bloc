@@ -21,20 +21,24 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _loading(Emitter<HomeState> emit) async {
-    emit(state.copyWith(status: LoadingStatus.inProgress));
+    try {
+      emit(state.copyWith(status: LoadingStatus.inProgress));
 
-    await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
 
-    final allProducts = await homeRepository.getAllProducts();
-    final hotProducts = await homeRepository.getHotProducts();
+      final allProducts = await homeRepository.getAllProducts();
+      final hotProducts = await homeRepository.getHotProducts();
 
-    emit(
-      state.copyWith(
-        status: LoadingStatus.success,
-        allProducts: allProducts,
-        hotProducts: hotProducts,
-      ),
-    );
+      emit(
+        state.copyWith(
+          status: LoadingStatus.success,
+          allProducts: allProducts,
+          hotProducts: hotProducts,
+        ),
+      );
+    } catch (e) {
+      emit(state.copyWith(status: LoadingStatus.error));
+    }
   }
 
   // _addToCart() {}

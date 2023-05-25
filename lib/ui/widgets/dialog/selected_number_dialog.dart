@@ -116,8 +116,8 @@ class _ContentSelectNumberDialogState
       onTap: () {
         if (_formKey.currentState?.validate() ?? false) {
           final amount = int.tryParse(_controller.text) ?? 1;
-          widget.onAmountChanged(amount);
-          Navigator.pop(context, true);
+          widget.onAmountChanged.call(amount);
+          Navigator.pop(context);
         }
       },
       isActive: _isButtonActive,

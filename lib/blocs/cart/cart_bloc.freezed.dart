@@ -20,22 +20,21 @@ mixin _$CartEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(CartProduct cartProduct) removedProduct,
-    required TResult Function(CartProduct cartProduct, int quantity)
-        addedProduct,
+    required TResult Function(Product product, int quantity) addedProduct,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(CartProduct cartProduct)? removedProduct,
-    TResult? Function(CartProduct cartProduct, int quantity)? addedProduct,
+    TResult? Function(Product product, int quantity)? addedProduct,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(CartProduct cartProduct)? removedProduct,
-    TResult Function(CartProduct cartProduct, int quantity)? addedProduct,
+    TResult Function(Product product, int quantity)? addedProduct,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -120,8 +119,7 @@ class _$_CartLoading implements _CartLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(CartProduct cartProduct) removedProduct,
-    required TResult Function(CartProduct cartProduct, int quantity)
-        addedProduct,
+    required TResult Function(Product product, int quantity) addedProduct,
   }) {
     return loading();
   }
@@ -131,7 +129,7 @@ class _$_CartLoading implements _CartLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(CartProduct cartProduct)? removedProduct,
-    TResult? Function(CartProduct cartProduct, int quantity)? addedProduct,
+    TResult? Function(Product product, int quantity)? addedProduct,
   }) {
     return loading?.call();
   }
@@ -141,7 +139,7 @@ class _$_CartLoading implements _CartLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(CartProduct cartProduct)? removedProduct,
-    TResult Function(CartProduct cartProduct, int quantity)? addedProduct,
+    TResult Function(Product product, int quantity)? addedProduct,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -196,6 +194,8 @@ abstract class _$$_CartProductRemovedCopyWith<$Res> {
       __$$_CartProductRemovedCopyWithImpl<$Res>;
   @useResult
   $Res call({CartProduct cartProduct});
+
+  $CartProductCopyWith<$Res> get cartProduct;
 }
 
 /// @nodoc
@@ -217,6 +217,14 @@ class __$$_CartProductRemovedCopyWithImpl<$Res>
           : cartProduct // ignore: cast_nullable_to_non_nullable
               as CartProduct,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CartProductCopyWith<$Res> get cartProduct {
+    return $CartProductCopyWith<$Res>(_value.cartProduct, (value) {
+      return _then(_value.copyWith(cartProduct: value));
+    });
   }
 }
 
@@ -257,8 +265,7 @@ class _$_CartProductRemoved implements _CartProductRemoved {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(CartProduct cartProduct) removedProduct,
-    required TResult Function(CartProduct cartProduct, int quantity)
-        addedProduct,
+    required TResult Function(Product product, int quantity) addedProduct,
   }) {
     return removedProduct(cartProduct);
   }
@@ -268,7 +275,7 @@ class _$_CartProductRemoved implements _CartProductRemoved {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(CartProduct cartProduct)? removedProduct,
-    TResult? Function(CartProduct cartProduct, int quantity)? addedProduct,
+    TResult? Function(Product product, int quantity)? addedProduct,
   }) {
     return removedProduct?.call(cartProduct);
   }
@@ -278,7 +285,7 @@ class _$_CartProductRemoved implements _CartProductRemoved {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(CartProduct cartProduct)? removedProduct,
-    TResult Function(CartProduct cartProduct, int quantity)? addedProduct,
+    TResult Function(Product product, int quantity)? addedProduct,
     required TResult orElse(),
   }) {
     if (removedProduct != null) {
@@ -338,7 +345,7 @@ abstract class _$$_CartProductAddedCopyWith<$Res> {
           _$_CartProductAdded value, $Res Function(_$_CartProductAdded) then) =
       __$$_CartProductAddedCopyWithImpl<$Res>;
   @useResult
-  $Res call({CartProduct cartProduct, int quantity});
+  $Res call({Product product, int quantity});
 }
 
 /// @nodoc
@@ -352,14 +359,14 @@ class __$$_CartProductAddedCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? cartProduct = null,
+    Object? product = null,
     Object? quantity = null,
   }) {
     return _then(_$_CartProductAdded(
-      cartProduct: null == cartProduct
-          ? _value.cartProduct
-          : cartProduct // ignore: cast_nullable_to_non_nullable
-              as CartProduct,
+      product: null == product
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as Product,
       quantity: null == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
@@ -371,17 +378,16 @@ class __$$_CartProductAddedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_CartProductAdded implements _CartProductAdded {
-  const _$_CartProductAdded(
-      {required this.cartProduct, required this.quantity});
+  const _$_CartProductAdded({required this.product, required this.quantity});
 
   @override
-  final CartProduct cartProduct;
+  final Product product;
   @override
   final int quantity;
 
   @override
   String toString() {
-    return 'CartEvent.addedProduct(cartProduct: $cartProduct, quantity: $quantity)';
+    return 'CartEvent.addedProduct(product: $product, quantity: $quantity)';
   }
 
   @override
@@ -389,14 +395,13 @@ class _$_CartProductAdded implements _CartProductAdded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CartProductAdded &&
-            (identical(other.cartProduct, cartProduct) ||
-                other.cartProduct == cartProduct) &&
+            (identical(other.product, product) || other.product == product) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, cartProduct, quantity);
+  int get hashCode => Object.hash(runtimeType, product, quantity);
 
   @JsonKey(ignore: true)
   @override
@@ -409,10 +414,9 @@ class _$_CartProductAdded implements _CartProductAdded {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(CartProduct cartProduct) removedProduct,
-    required TResult Function(CartProduct cartProduct, int quantity)
-        addedProduct,
+    required TResult Function(Product product, int quantity) addedProduct,
   }) {
-    return addedProduct(cartProduct, quantity);
+    return addedProduct(product, quantity);
   }
 
   @override
@@ -420,9 +424,9 @@ class _$_CartProductAdded implements _CartProductAdded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(CartProduct cartProduct)? removedProduct,
-    TResult? Function(CartProduct cartProduct, int quantity)? addedProduct,
+    TResult? Function(Product product, int quantity)? addedProduct,
   }) {
-    return addedProduct?.call(cartProduct, quantity);
+    return addedProduct?.call(product, quantity);
   }
 
   @override
@@ -430,11 +434,11 @@ class _$_CartProductAdded implements _CartProductAdded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(CartProduct cartProduct)? removedProduct,
-    TResult Function(CartProduct cartProduct, int quantity)? addedProduct,
+    TResult Function(Product product, int quantity)? addedProduct,
     required TResult orElse(),
   }) {
     if (addedProduct != null) {
-      return addedProduct(cartProduct, quantity);
+      return addedProduct(product, quantity);
     }
     return orElse();
   }
@@ -476,10 +480,10 @@ class _$_CartProductAdded implements _CartProductAdded {
 
 abstract class _CartProductAdded implements CartEvent {
   const factory _CartProductAdded(
-      {required final CartProduct cartProduct,
+      {required final Product product,
       required final int quantity}) = _$_CartProductAdded;
 
-  CartProduct get cartProduct;
+  Product get product;
   int get quantity;
   @JsonKey(ignore: true)
   _$$_CartProductAddedCopyWith<_$_CartProductAdded> get copyWith =>
@@ -572,11 +576,12 @@ class __$$_CartStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CartState implements _CartState {
+class _$_CartState extends _CartState {
   const _$_CartState(
       {this.status = LoadingStatus.initial,
       final List<CartProduct> cartProducts = const []})
-      : _cartProducts = cartProducts;
+      : _cartProducts = cartProducts,
+        super._();
 
   @override
   @JsonKey()
@@ -616,10 +621,11 @@ class _$_CartState implements _CartState {
       __$$_CartStateCopyWithImpl<_$_CartState>(this, _$identity);
 }
 
-abstract class _CartState implements CartState {
+abstract class _CartState extends CartState {
   const factory _CartState(
       {final LoadingStatus status,
       final List<CartProduct> cartProducts}) = _$_CartState;
+  const _CartState._() : super._();
 
   @override
   LoadingStatus get status;

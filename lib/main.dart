@@ -6,8 +6,10 @@ import 'package:shoppingcart/repositories/cart/cart_category.dart';
 import 'package:shoppingcart/repositories/home/home_repository.dart';
 import 'package:shoppingcart/router/app_router.dart';
 import 'package:shoppingcart/router/app_routes.dart';
+import 'package:shoppingcart/simple_bloc_observer.dart';
 
 void main() {
+  Bloc.observer = SimpleBlocObserver();
   runApp(const MyApp());
 }
 

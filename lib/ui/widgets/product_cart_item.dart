@@ -1,5 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:shoppingcart/models/product.dart';
 import 'package:shoppingcart/ui/widgets/dialog/selected_number_dialog.dart';
 
@@ -10,12 +12,14 @@ class ProductCartItem extends StatelessWidget {
     required this.onAmountChanged,
     required this.onRemoveTap,
     this.elevation = 1,
+    this.amount = 1,
   }) : super(key: key);
 
   final Product product;
   final ValueChanged<int> onAmountChanged;
   final VoidCallback onRemoveTap;
   final double elevation;
+  final int amount;
   @override
   Widget build(BuildContext context) {
     var productImage = ClipRRect(
@@ -109,6 +113,7 @@ class ProductCartItem extends StatelessWidget {
                                 },
                               );
                             },
+                            amount: amount,
                           ),
                           Expanded(
                             child: Align(
@@ -133,11 +138,13 @@ class ProductCartItem extends StatelessWidget {
 class _NumberPicker extends StatefulWidget {
   final ValueChanged<int> onChanged;
   final Function(String) onNumberTap;
+  final int amount;
 
   const _NumberPicker({
     Key? key,
     required this.onChanged,
     required this.onNumberTap,
+    this.amount = 1,
   }) : super(key: key);
 
   @override
@@ -145,7 +152,13 @@ class _NumberPicker extends StatefulWidget {
 }
 
 class _NumberPickerState extends State<_NumberPicker> {
-  int _number = 1;
+  late int _number;
+
+  @override
+  void initState() {
+    super.initState();
+    _number = widget.amount;
+  }
 
   void _increment() {
     if (_number == 999) return;

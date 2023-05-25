@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shoppingcart/blocs/cart/cart_bloc.dart';
 
 import 'package:shoppingcart/blocs/home/home_bloc.dart';
 import 'package:shoppingcart/models/product.dart';
@@ -24,22 +25,27 @@ class _HomeViewState extends State<HomeView> {
       onPressed: () {
         Navigator.pushNamed(context, AppRoutes.shoppingCart);
       },
-      icon: const Stack(
+      icon: Stack(
         clipBehavior: Clip.none,
         children: [
-          Icon(Icons.shopping_cart_outlined),
+          const Icon(Icons.shopping_cart_outlined),
           Positioned(
             bottom: -4,
             left: -4,
             child: CircleAvatar(
               radius: 8,
               backgroundColor: Colors.redAccent,
-              child: Text(
-                '0',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 10,
-                ),
+              child: BlocConsumer<CartBloc, CartState>(
+                listener: (context, state) {},
+                builder: (context, state) {
+                  return Text(
+                    state.totalQuantity.toString(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                    ),
+                  );
+                },
               ),
             ),
           ),
@@ -138,37 +144,46 @@ class _AllProductGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var amount = 1;
     return SliverGrid.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         mainAxisSpacing: 10,
       ),
       itemCount: allProducts.length,
-      itemBuilder: (context, index) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: ProductCardItem(
-          height: 200,
-          width: double.infinity,
-          product: allProducts[index],
-          onTap: () {
-            showAddToCartBottomSheet(
-              context,
-              product: Product(
-                id: '1',
-                title: 'Product #11',
-                price: 170000,
-                imageUrl: 'assets/images/product_0.jpg',
-              ),
-              onAddToCart: () {
-                // TODO: Add to cart
-              },
-              onAmountChanged: (value) {
-                // TODO: Amount changed
-              },
-            );
-          },
-        ),
-      ),
+      itemBuilder: (context, index) {
+        final product = allProducts[index];
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: ProductCardItem(
+            height: 200,
+            width: double.infinity,
+            product: allProducts[index],
+            onTap: () {
+              showAddToCartBottomSheet(
+                context,
+                product: Product(
+                  id: '1',
+                  title: 'Product #11',
+                  price: 170000,
+                  imageUrl: 'assets/images/product_0.jpg',
+                ),
+                onAddToCart: () {
+                  context.read<CartBloc>().add(
+                        CartEvent.addedProduct(
+                          product: product,
+                          quantity: amount,
+                        ),
+                      );
+                },
+                onAmountChanged: (value) {
+                  amount = value;
+                },
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }
@@ -179,9 +194,9 @@ class _HotProductListView extends StatelessWidget {
   });
 
   final List<Product> hotProducts;
-
   @override
   Widget build(BuildContext context) {
+    var amount = 1;
     return SliverToBoxAdapter(
       child: SizedBox(
         height: 200,
@@ -189,21 +204,28 @@ class _HotProductListView extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemCount: hotProducts.length,
           itemBuilder: (context, index) {
+            final product = hotProducts[index];
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: ProductCardItem(
                 height: 200,
                 width: 150,
-                product: hotProducts[index],
-                onTap: () {
-                  showAddToCartBottomSheet(
+                isHotProduct: true,
+                product: product,
+                onTap: () async {
+                  await showAddToCartBottomSheet(
                     context,
-                    product: hotProducts[index],
+                    product: product,
                     onAddToCart: () {
-                      // TODO: Add to cart
+                      context.read<CartBloc>().add(
+                            CartEvent.addedProduct(
+                              product: product,
+                              quantity: amount,
+                            ),
+                          );
                     },
                     onAmountChanged: (value) {
-                      // TODO: Amount changed
+                      amount = value;
                     },
                   );
                 },

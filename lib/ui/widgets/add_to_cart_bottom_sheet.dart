@@ -52,6 +52,7 @@ class _ContentAddToCartBottomSheet extends StatelessWidget {
         title: 'Add to card',
       ),
     );
+    int amount = 1;
     return Container(
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
@@ -65,11 +66,16 @@ class _ContentAddToCartBottomSheet extends StatelessWidget {
         children: [
           ProductCartItem(
             product: product,
-            onAmountChanged: onAmountChanged,
+            onAmountChanged: (value) {
+              
+              onAmountChanged.call(value);
+              amount = value;
+            },
             onRemoveTap: () {
               Navigator.pop(context);
             },
             elevation: 0,
+            amount: amount,
           ),
           const SizedBox(height: 16),
           addProductToCartButton,

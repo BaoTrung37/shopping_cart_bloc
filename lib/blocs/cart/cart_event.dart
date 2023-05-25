@@ -7,7 +7,7 @@ class CartEvent with _$CartEvent {
     required CartProduct cartProduct,
   }) = _CartProductRemoved;
   const factory CartEvent.addedProduct({
-    required CartProduct cartProduct,
+    required Product product,
     required int quantity,
   }) = _CartProductAdded;
 }
