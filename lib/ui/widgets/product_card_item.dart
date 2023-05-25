@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shoppingcart/models/product.dart';
+import 'package:shoppingcart/utils/extensions/number_format_extension.dart';
 
 class ProductCardItem extends StatelessWidget {
   const ProductCardItem({
@@ -9,12 +10,14 @@ class ProductCardItem extends StatelessWidget {
     required this.width,
     required this.product,
     required this.onTap,
+    this.isHotProduct = false,
   }) : super(key: key);
 
   final double height;
   final double width;
   final Product product;
   final VoidCallback onTap;
+  final bool isHotProduct;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -36,18 +39,19 @@ class ProductCardItem extends StatelessWidget {
                   width: width,
                   fit: BoxFit.cover,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(6),
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 10,
-                    child: SvgPicture.asset(
-                      'assets/icons/fire.svg',
-                      height: 18,
-                      width: 18,
+                if (isHotProduct)
+                  Padding(
+                    padding: const EdgeInsets.all(6),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 10,
+                      child: SvgPicture.asset(
+                        'assets/icons/fire.svg',
+                        height: 18,
+                        width: 18,
+                      ),
                     ),
                   ),
-                ),
               ],
             ),
           ),
@@ -69,7 +73,7 @@ class ProductCardItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      product.price.toString(),
+                      product.price.toCurrencyString(),
                       style: TextStyle(
                         color: Colors.amber[700],
                         fontSize: 16,

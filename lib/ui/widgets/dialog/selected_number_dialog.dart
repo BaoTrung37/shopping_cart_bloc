@@ -89,7 +89,9 @@ class _ContentSelectNumberDialogState
         } catch (e) {
           number = 1;
         }
-        if (number > 999) {
+        if (number < 1) {
+          return 'Quantity must be greater than 0';
+        } else if (number > 999) {
           return 'Quantity cannot exceed 999';
         }
         return null;
@@ -116,8 +118,8 @@ class _ContentSelectNumberDialogState
       onTap: () {
         if (_formKey.currentState?.validate() ?? false) {
           final amount = int.tryParse(_controller.text) ?? 1;
-          widget.onAmountChanged(amount);
-          Navigator.pop(context, true);
+          widget.onAmountChanged.call(amount);
+          Navigator.pop(context);
         }
       },
       isActive: _isButtonActive,
