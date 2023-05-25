@@ -1,10 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'package:shoppingcart/blocs/home/home_bloc.dart';
 import 'package:shoppingcart/models/product.dart';
 import 'package:shoppingcart/router/app_routes.dart';
 import 'package:shoppingcart/ui/widgets/add_to_cart_bottom_sheet.dart';
 import 'package:shoppingcart/ui/widgets/product_card_item.dart';
+import 'package:shoppingcart/utils/enums/loading_status.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -31,7 +35,7 @@ class _HomeViewState extends State<HomeView> {
               radius: 8,
               backgroundColor: Colors.redAccent,
               child: Text(
-                '3',
+                '0',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 10,
@@ -42,6 +46,26 @@ class _HomeViewState extends State<HomeView> {
         ],
       ),
     );
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Home'),
+        centerTitle: true,
+        backgroundColor: Colors.amber[700],
+        actions: [
+          shoppingCartButton,
+        ],
+      ),
+      body: const _HomeContent(),
+    );
+  }
+}
+
+class _HomeContent extends StatelessWidget {
+  const _HomeContent();
+
+  @override
+  Widget build(BuildContext context) {
     var hotProductTitle = SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
@@ -66,48 +90,6 @@ class _HomeViewState extends State<HomeView> {
       ),
     );
 
-    var hotProductListView = SliverToBoxAdapter(
-      child: SizedBox(
-        height: 200,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: 6,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: ProductCardItem(
-                height: 200,
-                width: 150,
-                product: Product(
-                  id: '1',
-                  title: 'Product #11',
-                  price: 170000,
-                  imageUrl: 'assets/images/product_0.jpg',
-                ),
-                onTap: () {
-                  showAddToCartBottomSheet(
-                    context,
-                    product: Product(
-                      id: '1',
-                      title: 'Product #11',
-                      price: 170000,
-                      imageUrl: 'assets/images/product_0.jpg',
-                    ),
-                    onAddToCart: () {
-                      // TODO: Add to cart
-                    },
-                    onAmountChanged: (value) {
-                      // TODO: Amount changed
-                    },
-                  );
-                },
-              ),
-            );
-          },
-        ),
-      ),
-    );
-
     var allProductTitle = const SliverToBoxAdapter(
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
@@ -122,23 +104,52 @@ class _HomeViewState extends State<HomeView> {
       ),
     );
 
-    var allProductGridView = SliverGrid.builder(
-      itemCount: 10,
+    return Builder(
+      builder: (context) => BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          if (state.status == LoadingStatus.inProgress) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          final hotProducts = state.hotProducts;
+          final allProducts = state.allProducts;
+          return CustomScrollView(
+            slivers: [
+              hotProductTitle,
+              _HotProductListView(hotProducts: hotProducts),
+              allProductTitle,
+              _AllProductGridView(allProducts: allProducts),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _AllProductGridView extends StatelessWidget {
+  const _AllProductGridView({
+    Key? key,
+    required this.allProducts,
+  }) : super(key: key);
+
+  final List<Product> allProducts;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverGrid.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         mainAxisSpacing: 10,
       ),
+      itemCount: allProducts.length,
       itemBuilder: (context, index) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: ProductCardItem(
           height: 200,
           width: double.infinity,
-          product: Product(
-            id: '1',
-            title: 'Product #11',
-            price: 170000,
-            imageUrl: 'assets/images/product_0.jpg',
-          ),
+          product: allProducts[index],
           onTap: () {
             showAddToCartBottomSheet(
               context,
@@ -159,23 +170,47 @@ class _HomeViewState extends State<HomeView> {
         ),
       ),
     );
+  }
+}
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-        centerTitle: true,
-        backgroundColor: Colors.amber[700],
-        actions: [
-          shoppingCartButton,
-        ],
-      ),
-      body: CustomScrollView(
-        slivers: [
-          hotProductTitle,
-          hotProductListView,
-          allProductTitle,
-          allProductGridView,
-        ],
+class _HotProductListView extends StatelessWidget {
+  const _HotProductListView({
+    required this.hotProducts,
+  });
+
+  final List<Product> hotProducts;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: SizedBox(
+        height: 200,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: hotProducts.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: ProductCardItem(
+                height: 200,
+                width: 150,
+                product: hotProducts[index],
+                onTap: () {
+                  showAddToCartBottomSheet(
+                    context,
+                    product: hotProducts[index],
+                    onAddToCart: () {
+                      // TODO: Add to cart
+                    },
+                    onAmountChanged: (value) {
+                      // TODO: Amount changed
+                    },
+                  );
+                },
+              ),
+            );
+          },
+        ),
       ),
     );
   }
