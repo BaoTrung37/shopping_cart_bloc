@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoppingcart/blocs/cart/cart_bloc.dart';
+import 'package:shoppingcart/router/app_routes.dart';
 import 'package:shoppingcart/ui/widgets/app_text_buton.dart';
+import 'package:shoppingcart/ui/widgets/dialog/notification_dialog.dart';
 import 'package:shoppingcart/ui/widgets/product_cart_item.dart';
 import 'package:shoppingcart/utils/enums/loading_status.dart';
+import 'package:shoppingcart/utils/extensions/number_format_extension.dart';
 
 class ShoppingCartView extends StatefulWidget {
   const ShoppingCartView({super.key});
@@ -16,6 +19,7 @@ class _ShoppingCartViewState extends State<ShoppingCartView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: BlocConsumer<CartBloc, CartState>(
           listener: (context, state) {
@@ -53,11 +57,20 @@ class _ShoppingCartViewState extends State<ShoppingCartView> {
                               child: ProductCartItem(
                                 amount: cartProducts[index].quantity,
                                 onAmountChanged: (value) {
-                                  //
+                                  context.read<CartBloc>().add(
+                                        CartEvent.updatedProduct(
+                                          cartProduct: cartProducts[index],
+                                          quantity: value,
+                                        ),
+                                      );
                                 },
                                 product: cartProducts[index].product,
                                 onRemoveTap: () {
-                                  //
+                                  context.read<CartBloc>().add(
+                                        CartEvent.removedProduct(
+                                          cartProduct: cartProducts[index],
+                                        ),
+                                      );
                                 },
                               ),
                             ),
@@ -76,9 +89,9 @@ class _ShoppingCartViewState extends State<ShoppingCartView> {
                         horizontal: 16, vertical: 16),
                     child: Column(
                       children: [
-                        const Row(
+                        Row(
                           children: [
-                            Text(
+                            const Text(
                               'Total price ',
                               style: TextStyle(
                                 fontSize: 18,
@@ -86,13 +99,20 @@ class _ShoppingCartViewState extends State<ShoppingCartView> {
                               ),
                             ),
                             Expanded(
-                              child: Text(
-                                '170000 đ',
-                                textAlign: TextAlign.end,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              child: BlocConsumer<CartBloc, CartState>(
+                                listener: (context, state) {
+                                  // TODO: implement listener
+                                },
+                                builder: (context, state) {
+                                  return Text(
+                                    state.totalPrice.toCurrencyString(),
+                                    textAlign: TextAlign.end,
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ],
@@ -101,7 +121,15 @@ class _ShoppingCartViewState extends State<ShoppingCartView> {
                         AppTextButton(
                           title: 'Order',
                           onTap: () {
-                            //
+                            context
+                                .read<CartBloc>()
+                                .add(const CartEvent.order());
+                            showNotificationDialog(context,
+                                title: 'Order Successfully!', onTap: () {
+                              Navigator.of(context).popUntil(
+                                ModalRoute.withName(AppRoutes.home),
+                              );
+                            });
                           },
                         ),
                       ],

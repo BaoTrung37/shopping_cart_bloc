@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shoppingcart/models/product.dart';
+import 'package:shoppingcart/utils/extensions/number_format_extension.dart';
 
 class ProductCardItem extends StatelessWidget {
   const ProductCardItem({
@@ -72,7 +73,7 @@ class ProductCardItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      product.price.toString(),
+                      product.price.toCurrencyString(),
                       style: TextStyle(
                         color: Colors.amber[700],
                         fontSize: 16,

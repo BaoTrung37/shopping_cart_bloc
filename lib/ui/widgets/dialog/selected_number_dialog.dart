@@ -89,7 +89,9 @@ class _ContentSelectNumberDialogState
         } catch (e) {
           number = 1;
         }
-        if (number > 999) {
+        if (number < 1) {
+          return 'Quantity must be greater than 0';
+        } else if (number > 999) {
           return 'Quantity cannot exceed 999';
         }
         return null;

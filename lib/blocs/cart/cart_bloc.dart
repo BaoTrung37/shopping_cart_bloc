@@ -23,6 +23,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         loading: (_) async => await _loading(emit),
         removedProduct: (event) async => await removedProduct(event, emit),
         addedProduct: (event) async => await addedProduct(event, emit),
+        updatedProduct: (event) async => await updatedProduct(event, emit),
+        order: (_) async => await order(emit),
       );
     });
   }
@@ -44,7 +46,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
   }
 
-  addedProduct(_CartProductAdded event, Emitter<CartState> emit) async {
+  addedProduct(_AddedCartProduct event, Emitter<CartState> emit) async {
     try {
       debugPrint('cartProduct: ${event.product.title}');
 
@@ -56,11 +58,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           .isNotEmpty;
 
       if (isProductInCart) {
-        // cartProducts = cartProducts
-        //     .where((element) => element.product.id == event.product.id)
-        //     .toList()
-        //     .map((e) => e.copyWith(quantity: e.quantity + event.quantity))
-        //     .toList();
         final index = cartProducts
             .indexWhere((element) => element.product.id == event.product.id);
         cartProducts[index] = cartProducts[index]
@@ -85,19 +82,54 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
   }
 
-  removedProduct(_CartProductRemoved event, Emitter<CartState> emit) async {
-    // try {
-    //   var cartProduct = state.cartProducts
-    //     ..removeWhere((element) => element.product.id == event.cartProduct.id);
+  removedProduct(_RemovedCartProduct event, Emitter<CartState> emit) async {
+    try {
+      var cartProduct = state.cartProducts.toList();
 
-    //   emit(
-    //     state.copyWith(
-    //       status: LoadingStatus.success,
-    //       cartProducts: cartProduct,
-    //     ),
-    //   );
-    // } catch (e) {
-    //   emit(state.copyWith(status: LoadingStatus.error));
-    // }
+      cartProduct.removeWhere(
+          (element) => element.product.id == event.cartProduct.product.id);
+
+      emit(
+        state.copyWith(
+          status: LoadingStatus.success,
+          cartProducts: cartProduct,
+        ),
+      );
+    } catch (e) {
+      emit(state.copyWith(status: LoadingStatus.error));
+    }
+  }
+
+  updatedProduct(event, Emitter<CartState> emit) async {
+    try {
+      var cartProduct = state.cartProducts.toList();
+
+      final index = cartProduct.indexWhere(
+          (element) => element.product.id == event.cartProduct.product.id);
+      cartProduct[index] =
+          cartProduct[index].copyWith(quantity: event.quantity);
+
+      emit(
+        state.copyWith(
+          status: LoadingStatus.success,
+          cartProducts: cartProduct,
+        ),
+      );
+    } catch (e) {
+      emit(state.copyWith(status: LoadingStatus.error));
+    }
+  }
+
+  order(Emitter<CartState> emit) async {
+    try {
+      emit(
+        state.copyWith(
+          status: LoadingStatus.success,
+          cartProducts: [],
+        ),
+      );
+    } catch (e) {
+      emit(state.copyWith(status: LoadingStatus.error));
+    }
   }
 }

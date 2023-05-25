@@ -76,7 +76,6 @@ class _ContentAddToCartBottomSheetState
             onAmountChanged: (value) {
               setState(() {
                 amount = value;
-                debugPrint('amount: $amount');
               });
             },
             onRemoveTap: () {

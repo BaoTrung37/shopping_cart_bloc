@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:shoppingcart/models/product.dart';
 import 'package:shoppingcart/ui/widgets/dialog/selected_number_dialog.dart';
+import 'package:shoppingcart/utils/extensions/number_format_extension.dart';
 
 class ProductCartItem extends StatelessWidget {
   const ProductCartItem({
@@ -62,7 +63,7 @@ class ProductCartItem extends StatelessWidget {
     );
 
     var productPriceText = Text(
-      product.price.toString(),
+      product.price.toCurrencyString(),
       style: TextStyle(
         fontSize: 16,
         color: Colors.amber[700],

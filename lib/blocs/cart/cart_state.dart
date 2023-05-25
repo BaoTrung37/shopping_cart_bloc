@@ -10,4 +10,8 @@ class CartState with _$CartState {
 
   int get totalQuantity => cartProducts.fold(
       0, (previousValue, element) => previousValue + element.quantity);
+  int get totalPrice => cartProducts.fold(
+      0,
+      (previousValue, element) =>
+          previousValue + element.product.price * element.quantity);
 }
