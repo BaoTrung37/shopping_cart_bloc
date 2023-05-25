@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shoppingcart/router/app_routes.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -10,8 +11,11 @@ class SplashView extends StatefulWidget {
 class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
-    // TODO: implement initState
-
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Future.delayed(const Duration(seconds: 3), () {
+        Navigator.of(context).pushNamed(AppRoutes.home);
+      });
+    });
     super.initState();
   }
 
