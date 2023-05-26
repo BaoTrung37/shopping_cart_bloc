@@ -44,11 +44,16 @@ class _HomeViewState extends State<HomeView> {
               child: BlocConsumer<CartBloc, CartState>(
                 listener: (context, state) {},
                 builder: (context, state) {
-                  return Text(
-                    state.totalQuantity.toString(),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
+                  return FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Padding(
+                      padding: const EdgeInsets.all(2),
+                      child: Text(
+                        state.totalQuantity.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   );
                 },
