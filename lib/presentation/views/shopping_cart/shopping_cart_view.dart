@@ -100,9 +100,7 @@ class _ShoppingCartViewState extends State<ShoppingCartView> {
                             ),
                             Expanded(
                               child: BlocConsumer<CartBloc, CartState>(
-                                listener: (context, state) {
-                                  // TODO: implement listener
-                                },
+                                listener: (context, state) {},
                                 builder: (context, state) {
                                   return Text(
                                     state.totalPrice.toCurrencyString(),
