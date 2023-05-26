@@ -55,6 +55,7 @@ class _ContentAddToCartBottomSheetState
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: AppTextButton(
         onTap: () {
+          Navigator.pop(context);
           widget.onAddToCart(amount);
         },
         title: 'Add to card',
