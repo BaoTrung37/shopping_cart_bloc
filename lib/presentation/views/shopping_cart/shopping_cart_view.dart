@@ -118,19 +118,23 @@ class _ShoppingCartViewState extends State<ShoppingCartView> {
                           ],
                         ),
                         const SizedBox(height: 16),
-                        AppTextButton(
-                          title: 'Order',
-                          onTap: () {
-                            context
-                                .read<CartBloc>()
-                                .add(const CartEvent.order());
-                            showNotificationDialog(context,
-                                title: 'Order Successfully!', onTap: () {
-                              Navigator.of(context).popUntil(
-                                ModalRoute.withName(AppRoutes.home),
-                              );
-                            });
-                          },
+                        BlocListener<CartBloc, CartState>(
+                          listener: (context, state) {},
+                          child: AppTextButton(
+                            isActive: state.cartProducts.isNotEmpty,
+                            title: 'Order',
+                            onTap: () {
+                              context
+                                  .read<CartBloc>()
+                                  .add(const CartEvent.order());
+                              showNotificationDialog(context,
+                                  title: 'Order Successfully!', onTap: () {
+                                Navigator.of(context).popUntil(
+                                  ModalRoute.withName(AppRoutes.home),
+                                );
+                              });
+                            },
+                          ),
                         ),
                       ],
                     ),
